@@ -1,23 +1,8 @@
-const functions = require("firebase-functions")
-const { getDatabase, ref, set, child, get } = require("firebase/database")
 const fs = require("fs")
+const https = require("https")
 
 const express = require("express");
 const app = express()
-
-const firebaseConfig = {
-    apiKey: "AIzaSyCQ_SY7oRAO0IC7GQseZoTfmps9VwQkIKw",
-    authDomain: "modded-status.firebaseapp.com",
-    databaseURL: "https://modded-status-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "modded-status",
-    storageBucket: "modded-status.appspot.com",
-    messagingSenderId: "519884371748",
-    appId: "1:519884371748:web:90703d3ffa46a8426ce5b1",
-    measurementId: "G-TCV7V3QFCC"
-  };
-
-  const dbRef = ref(getDatabase());
-
 
 // Write time of request
 app.get("/uptime/granite",(req,res)=>{
@@ -58,15 +43,6 @@ app.get("/uptime/magma",(req,res)=>{
 })
 
 app.get("/servers",(req,res)=>{
-    get(child(dbRef, `servers`)).then((snapshot) => {
-        if (snapshot.exists()) {
-            
-        } else {
-          console.log("No data available");
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     const resFile = {
         "granite": false,
@@ -87,4 +63,4 @@ app.get("/servers",(req,res)=>{
     res.status(200).send(JSON.stringify(resFile))
 })
 
-exports.app = functions.https.onRequest(app)
+https.createServer(app).listen(443)
