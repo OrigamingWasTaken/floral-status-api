@@ -22,6 +22,10 @@ Here's a list of server names you can use (you can change them in `index.js`)
 - quartz
 - chorus
 
+## Webpage
+
+You can also visit the root of the api `"/"` and get access to a nice html page to see the servers' state.
+
 ## How it works
 
 You need to have a computer in a forceloaded chunk (spawn chunks, etc...) that does requests every **5 minutes** to the corresponding api url.
