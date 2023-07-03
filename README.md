@@ -25,6 +25,8 @@ Here's a list of server names you can use (you can change them in `index.js`)
 ## Webpage
 
 You can also visit the root of the api `"/"` and get access to a nice html page to see the servers' state.
+![image](https://github.com/OrigamingWasTaken/floral-status-api/assets/74014262/364cb4b2-63bf-403c-8c60-3fb4a28f955f)
+
 
 ## How it works
 
