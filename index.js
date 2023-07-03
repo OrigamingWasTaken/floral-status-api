@@ -80,6 +80,16 @@ app.get("/uptime/magma", (req, res) => {
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
+app.get("/uptime/quartz", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
+    const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
+    reqfile.quartz = new Date().getTime()
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
+    res.status(200).send("Up-Time Refreshed")
+})
 
 app.get("/servers", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
