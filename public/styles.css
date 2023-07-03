@@ -1,0 +1,103 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: rgb(15, 15, 15);
+    text-align: center;
+}
+
+h1,h3 {
+    text-align: center;
+    color: rgb(226, 225, 225);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.logo {
+    width: 20%
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+.floral-group {
+    margin: 0;
+    color: rgb(104, 104, 104);
+}
+
+.credits {
+    color: rgb(143, 143, 143);
+    position: fixed;
+    transform: translate(-50%,-50%);
+    top: 95%;
+    left: 90%;
+}
+
+.discord {
+    width: 5%;
+    position: fixed;
+    transform: translate(-50%,-50%);
+    top: 95%;
+    right: 91%;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.box {
+    background-color: rgb(19, 19, 19);
+    border: 1px solid rgb(80, 80, 80);
+    width: 35%;
+    height: 10%;
+    margin-top: 2%;
+    text-align: center;
+}
+
+.box-img {
+    width: 10%;
+    vertical-align: middle;
+    margin-bottom: 2%;
+}
+
+.box-title {
+    font-size: 2rem;
+}
+
+.status {
+    background-color: rgb(237, 62, 62);
+    margin: auto;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 3px;
+}
+
+.discord:hover {
+    filter: drop-shadow(1px -2px 6px #5369BD);
+    transition: 0.1s; 
+    transform-origin: center;
+}
+.discord:not(:hover) {
+    transition: 0.1s; 
+}
+
+.box:hover {
+    background-color: rgb(21, 21, 21);
+    transition: 0.1s;
+}
+
+@media screen and (max-width: 667px) {
+    body {
+        overflow-x: hidden !important;
+    }
+    .container {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+}

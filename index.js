@@ -1,6 +1,13 @@
 const fs = require("fs")
 const express = require("express");
+const cors = require("cors")
 const app = express()
+
+app.use(cors({
+    origin: "*"
+}))
+app.use(express.static("public"))
+app.use(express.static(__dirname));
 
 const PORT = 25559
 
@@ -8,8 +15,8 @@ function isCC(req) {
     return req.get("User-Agent").startsWith("computercraft")
 }
 
-app.get("/", (req, res) => {
-    res.status(200).send("FloralStatus-API")
+app.get("/",(req,res)=>{
+    res.status(200).sendFile("index.html", {root: "public"})
 })
 
 // Write time of request
@@ -92,6 +99,7 @@ app.get("/servers", (req, res) => {
             resFile[server] = true
         }
     }
+    res.set("Access-Control-Allow-Origin","*")
     res.status(200).send(JSON.stringify(resFile))
 })
 
