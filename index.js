@@ -4,8 +4,8 @@ const app = express()
 
 const PORT = 25559
 
-function getDate() {
-    return new Date().getTime()
+function isCC(req) {
+    return req.get("User-Agent").startsWith("computercraft")
 }
 
 app.get("/", (req, res) => {
@@ -14,38 +14,60 @@ app.get("/", (req, res) => {
 
 // Write time of request
 app.get("/uptime/granite", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
-    const currentDate = new Date();
-    reqfile.granite = getDate()
+    reqfile.granite = new Date().getTime()
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
-    console.log("up")
 })
 app.get("/uptime/emeraude", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.emeraude = new Date().getTime()
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
 app.get("/uptime/andesite", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.andesite = new Date().getTime()
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
 app.get("/uptime/obsidienne", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.obsidienne = new Date().getTime()
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
 app.get("/uptime/chorus", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.chorus = new Date().getTime()
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
 app.get("/uptime/magma", (req, res) => {
+    if (!isCC(req)) {
+        res.status(403).send("Not authorized to refresh uptime")
+        return
+    }
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.magma = new Date().getTime()
     fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
@@ -53,7 +75,6 @@ app.get("/uptime/magma", (req, res) => {
 })
 
 app.get("/servers", (req, res) => {
-    console.log("servers")
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     const resFile = {
         "granite": false,
