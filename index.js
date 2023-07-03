@@ -4,6 +4,12 @@ const https = require("https")
 const express = require("express");
 const app = express()
 
+const PORT = 25788
+
+app.get("/",(req,res)=>{
+    res.status(200).send("FloralStatus-API")
+})
+
 // Write time of request
 app.get("/uptime/granite",(req,res)=>{
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
@@ -63,4 +69,6 @@ app.get("/servers",(req,res)=>{
     res.status(200).send(JSON.stringify(resFile))
 })
 
-https.createServer(app).listen(443)
+app.listen(PORT,()=>{
+    console.log(`Listening on port ${PORT}`)
+})
