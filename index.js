@@ -1,54 +1,59 @@
 const fs = require("fs")
-const https = require("https")
-
 const express = require("express");
 const app = express()
 
-const PORT = 25788
+const PORT = 25559
 
-app.get("/",(req,res)=>{
+function getDate() {
+    return new Date().getTime()
+}
+
+app.get("/", (req, res) => {
     res.status(200).send("FloralStatus-API")
 })
 
 // Write time of request
-app.get("/uptime/granite",(req,res)=>{
+app.get("/uptime/granite", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
-    reqfile.granite = new Date().getTime()
-    fs.writeFileSync("./requests.json",JSON.stringify(reqfile))
+    const currentDate = new Date();
+    reqfile.granite = getDate()
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
+    console.log("up")
 })
-app.get("/uptime/emeraude",(req,res)=>{
+app.get("/uptime/emeraude", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.emeraude = new Date().getTime()
-    fs.writeFileSync("./requests.json",JSON.stringify(reqfile))
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
-app.get("/uptime/andesite",(req,res)=>{
+app.get("/uptime/andesite", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.andesite = new Date().getTime()
-    fs.writeFileSync("./requests.json",JSON.stringify(reqfile))
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
-app.get("/uptime/obsidienne",(req,res)=>{
+app.get("/uptime/obsidienne", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.obsidienne = new Date().getTime()
-    fs.writeFileSync("./requests.json",JSON.stringify(reqfile))
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
-app.get("/uptime/chorus",(req,res)=>{
+app.get("/uptime/chorus", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.chorus = new Date().getTime()
-    fs.writeFileSync("./requests.json",JSON.stringify(reqfile))
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
-app.get("/uptime/magma",(req,res)=>{
+app.get("/uptime/magma", (req, res) => {
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     reqfile.magma = new Date().getTime()
-    fs.writeFileSync("./requests.json",JSON.stringify(reqfile))
+    fs.writeFileSync("./requests.json", JSON.stringify(reqfile))
     res.status(200).send("Up-Time Refreshed")
 })
 
-app.get("/servers",(req,res)=>{
+app.get("/servers", (req, res) => {
+    console.log("servers")
     const reqfile = JSON.parse(fs.readFileSync("./requests.json"))
     const resFile = {
         "granite": false,
@@ -59,16 +64,16 @@ app.get("/servers",(req,res)=>{
         "quartz": false,
         "andesite": false
     }
-    for (const server in reqfile) {
-        let i = 0
-        if ((server - new Date().getTime()) > 240000) {
-            resFile[i] = true
-            i++
-        }   
+    for (const [server, value] of Object.entries(reqfile)) {
+        const cd = new Date().getTime()
+        const milliDiff = cd - value
+        if (milliDiff < 300_000) {
+            resFile[server] = true
+        }
     }
     res.status(200).send(JSON.stringify(resFile))
 })
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
